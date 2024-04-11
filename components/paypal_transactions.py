@@ -3,20 +3,6 @@ import hashlib
 from datetime import datetime, timedelta
 
 
-def authenticate_paypal(client_id, client_secret):
-    token_url = "https://api-m.paypal.com/v1/oauth2/token"
-    headers = {"Accept": "application/json", "Accept-Language": "en_US"}
-    data = {"grant_type": "client_credentials"}
-    auth = (client_id, client_secret)
-
-    response = requests.post(token_url, headers=headers, data=data, auth=auth)
-
-    if response.status_code == 200:
-        return response.json()["access_token"]
-    else:
-        raise Exception("Failed to obtain access token")
-
-
 def get_paypal_data(access_token):
     transactions_url = "https://api-m.paypal.com/v1/reporting/transactions"
     headers = {
@@ -73,7 +59,7 @@ def get_paypal_transactions(transactions):
                 transaction_info["fee_amount"]["value"]
             )
 
-            row = [id, formatted_timestamp, store_name, status, net_inflow]
+            row = [id, "payp", formatted_timestamp, store_name, status, net_inflow]
             rows.append(row)
 
     return rows

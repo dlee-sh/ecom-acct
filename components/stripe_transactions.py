@@ -39,6 +39,6 @@ def get_stripe_transactions(balance_transaction):
             # ID
             id = f"strp:{hashlib.sha256(transaction.id.encode()).hexdigest()}"
 
-            row = [id, formatted_date, shop_name, transaction.type, net_in_USD]
+            row = [id, "strp", formatted_date, shop_name, transaction.type, net_in_USD]
             rows.append(row)
     return rows
